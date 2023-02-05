@@ -1,13 +1,21 @@
 import DefaultModel from './DefaultModel'
 import { EDirection } from '../enum/EDirection'
-import { type IPlayer } from '../interface/IPlayer'
+import { EPlayerSide, type IPlayer } from '../interface/IPlayer'
 
 /**
  * Class Player
  */
 export class Player extends DefaultModel {
-  public static WIDTH = 18
-  public static HEIGHT = 100
+  get side(): EPlayerSide {
+    return this._side
+  }
+
+  set side(value: EPlayerSide) {
+    this._side = value
+  }
+
+  public static WIDTH = 15
+  public static HEIGHT = 125
 
   public static DIRECTION_UP = ['ArrowUp', 'KeyZ', 'KeyW', 'Numpad8']
   public static DIRECTION_DOWN = ['ArrowDown', 'KeyS', 'Numpad2']
@@ -17,6 +25,7 @@ export class Player extends DefaultModel {
   private _move: EDirection
   private _speed: number
   private _freeze: boolean = true
+  private _side: EPlayerSide = EPlayerSide.LEFT
 
   /**
    * @constructor
@@ -25,8 +34,6 @@ export class Player extends DefaultModel {
    */
   public constructor(options: IPlayer) {
     super()
-    this._x = options.x
-    this._y = options.y
     this._move = options.move ?? EDirection.IDLE
     this._speed = options.speed ?? 7
 
